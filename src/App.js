@@ -1,25 +1,44 @@
-import React from 'react';
+import React, {useState} from 'react';
+import ReactDOM from "react-dom";
 import logo from './logo.svg';
 import './App.css';
 import TeamMembersForm from "./Components/TeamMembersForm";
+import TeamMembers from "./Components/TeamMembers"
 
 function App() {
+  const [members, setMembers] = useState([
+    {
+      id: 1,
+      name: "Cody",
+      email: "aklsdghflkasgdf",
+      role: "student"
+        
+    }
+  ]);
+
+  const addNewMember = member => {
+    const newMember = {
+      id: Date.now(),
+      name: member.name,
+      email: member.email,
+      role: member.role
+    };
+    setMembers([...members, newMember]);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-       <TeamMembersForm />
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>My Team Members</h1>
+      {/* we are going to pass a function down as a prop */}
+      <TeamMembersForm addNewMember={addNewMember} />
+      <TeamMembers members={members} />
     </div>
   );
 }
+
+const rootElement = document.getElementById("root");
+ReactDOM.render(<App />, rootElement);
+
+
 
 export default App;
